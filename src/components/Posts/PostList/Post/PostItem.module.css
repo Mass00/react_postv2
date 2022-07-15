@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 1px solid darkorchid;
+    padding: 10px 10px 10px 10px;
+    margin-bottom: 10px;
+}
+.delBtn {
+    border: 1px solid darkorchid;
+    height: 20px;
+    width: 50px;
+    margin-left: 2px;
+}

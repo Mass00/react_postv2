@@ -1,0 +1,9 @@
+.container {
+    margin-bottom: 10px;
+}
+.input {
+    width: 100%;
+    border: 1px solid darkorchid;
+    height: 20px;
+    outline: none;
+}

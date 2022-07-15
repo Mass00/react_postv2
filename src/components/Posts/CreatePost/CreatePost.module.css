@@ -1,0 +1,15 @@
+.container {
+    margin-bottom: 10px;
+}
+.input {
+    border: 1px solid darkorchid;
+    height: 20px;
+    outline: none;
+}
+.addBtn {
+    border: 1px solid darkorchid;
+    height: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 2px;
+}
