@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {CreatePost} from "./CreatePost/CreatePost";
 import st from './Post.module.css'
 import {PostsList} from "./PostList/PostsList";
 import {PostFilter} from "./PostFilter/PostFilter";
+import {CustonButton} from "../UI/CustonButton";
+
 export type postsTypes = {
     id: string
     text: string
@@ -12,37 +14,49 @@ type PostsPropsTypes = {
     postFormId: string
     title: string
     posts: postsTypes[]
-    searchQ: string
-    handlerOnClickAddPost: (postFormId: string, text: string) => void
-    handlerOnChageChangeStatus: (postFormId: string, postId: string, status: boolean) => void
-    handlerOnClickRemovePost: (postFormId: string, postId: string) => void
-    handlerOnChangeSetSearchQ: (postFormId: string, searchQ: string) => void
+    addPost: (postFormId: string, text: string) => void
+    changeStatus: (postFormId: string, postId: string, status: boolean) => void
+    removePost: (postFormId: string, postId: string) => void
+    removePostForm: (postFormId: string) => void
 }
-export const Posts:React.FC<PostsPropsTypes> = (
+export const Posts: React.FC<PostsPropsTypes> = (
     {
         postFormId, posts,
-        title, searchQ,
-        handlerOnChageChangeStatus, handlerOnClickRemovePost,
-        handlerOnChangeSetSearchQ, handlerOnClickAddPost
+        title,
+        changeStatus, removePost,
+        addPost, removePostForm
     }
 ) => {
-    // const [searchQ, setSearchQ] = useState<string>('')
+    const [searchQ, setSearchQ] = useState<string>('')
+    const onChangeSetSearchQ = (searchQ: string) => {
+        setSearchQ(searchQ)
+    }
+    const handlerOnClickRemovePostForm = () => {
+        removePostForm(postFormId)
+    }
+    const filtredPosts = useMemo(() => {
+        return posts.filter(i => i.text.toLowerCase().includes(searchQ))
+    }, [searchQ, posts])
+
     return (
         <div className={st.container}>
-            <h4>{title}</h4>
+            <div className={st.title}>
+                <h4>{title}</h4>
+                <CustonButton onClick={handlerOnClickRemovePostForm}>X</CustonButton>
+            </div>
             <CreatePost
                 postFormId={postFormId}
-                handlerOnClickAddPost={handlerOnClickAddPost}
+                handlerOnClickAddPost={addPost}
             />
             <PostFilter
                 postFormId={postFormId}
                 searchQ={searchQ}
-                handlerOnChangeSetSearchQ={handlerOnChangeSetSearchQ}/>
+                handlerOnChangeSetSearchQ={onChangeSetSearchQ}/>
             <PostsList
-                posts={posts}
+                posts={filtredPosts}
                 postFormId={postFormId}
-                handlerOnChageChangeStatus={handlerOnChageChangeStatus}
-                handlerOnClickRemovePost={handlerOnClickRemovePost}
+                handlerOnChageChangeStatus={changeStatus}
+                handlerOnClickRemovePost={removePost}
             />
         </div>
     );

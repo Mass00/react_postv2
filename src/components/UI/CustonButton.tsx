@@ -5,11 +5,13 @@ type customButtonPropsTypes = defaultButtonPropsTypes & {
 }
 export const CustonButton:React.FC<customButtonPropsTypes> = (
     {
-        className,
+        children,className,
 
         ...rest
     }
 ) => {
     const finalClassName = className ? className : ''
-    return <button className={finalClassName} {...rest}/>
+    return <button className={finalClassName} {...rest}>
+        {children ? children : 'Кнопка'}
+            </button>
 };
